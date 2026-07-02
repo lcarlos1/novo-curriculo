@@ -85,9 +85,8 @@ footer{border-top:1px solid var(--border);padding:24px 0;color:var(--muted);font
       </div>
     </div>
     <div style="display:flex;gap:8px;align-items:center">
-      <div class="counter" title="Visitas totais">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
-        <span id="contador">—</span>
+      <div class="counter" title="Visitas totais" style="padding:0;background:transparent;border:none">
+        <img src="https://countapi.mileshilliard.com/api/v1/hit/luiz-carlos-formacao-2026/shield?text=visitas&bgcolor=8b5cf6&textcolor=ffffff&style=flat" alt="contador de visitas" style="height:22px;display:block">
       </div>
       <button class="btn-icon" id="theme" title="Alternar tema" style="font-size:18px">🌙</button>
       </div>
@@ -203,10 +202,6 @@ nomeEl.addEventListener('blur',()=>{const v=nomeEl.textContent.trim()||'Seu Nome
 nomeEl.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();nomeEl.blur()}});
 
 // contador
-// contador total (local, funciona offline)
-let total = parseInt(localStorage.getItem('visitasTotal')||'0')+1; 
-localStorage.setItem('visitasTotal', total);
-document.getElementById('contador').textContent = new Intl.NumberFormat('pt-BR').format(total);
 let v = parseInt(localStorage.getItem('visitaLocal')||'0')+1; localStorage.setItem('visitaLocal',v); document.getElementById('visita-local').textContent=`sua visita nº ${v}`;
 
 // share
