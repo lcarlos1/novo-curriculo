@@ -203,7 +203,10 @@ nomeEl.addEventListener('blur',()=>{const v=nomeEl.textContent.trim()||'Seu Nome
 nomeEl.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();nomeEl.blur()}});
 
 // contador
-fetch('https://api.countapi.xyz/hit/curriculo-academico-toledo-2026/v2').then(r=>r.json()).then(d=>{document.getElementById('contador').textContent=new Intl.NumberFormat('pt-BR').format(d.value)}).catch(()=>{document.getElementById('contador').textContent='—'});
+// contador total (local, funciona offline)
+let total = parseInt(localStorage.getItem('visitasTotal')||'0')+1; 
+localStorage.setItem('visitasTotal', total);
+document.getElementById('contador').textContent = new Intl.NumberFormat('pt-BR').format(total);
 let v = parseInt(localStorage.getItem('visitaLocal')||'0')+1; localStorage.setItem('visitaLocal',v); document.getElementById('visita-local').textContent=`sua visita nº ${v}`;
 
 // share
