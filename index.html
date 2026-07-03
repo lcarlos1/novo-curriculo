@@ -84,10 +84,7 @@ footer{border-top:1px solid var(--border);padding:24px 0;color:var(--muted);font
       </div>
     </div>
     <div style="display:flex;gap:8px;align-items:center">
-      <div class="counter" title="Visitas totais">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
-        <span id="contador">—</span>
-      </div>
+      <button class="btn-icon" id="theme" aria-label="Alternar tema">🌙</button>
       </div>
   </div>
 </header>
@@ -129,7 +126,10 @@ footer{border-top:1px solid var(--border);padding:24px 0;color:var(--muted);font
 
 <footer>
   <div class="wrap foot">
-    <div>Última atualização: <strong style="color:var(--text)">julho/2026</strong></div>
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center">
+      <div>Última atualização: <strong style="color:var(--text)">julho/2026</strong></div>
+      <img src="https://countapi.mileshilliard.com/api/v1/hit/luiz-carlos-formacao-2026/shield?text=visitas&bgcolor=8b5cf6&textcolor=ffffff&style=flat" id="badge-visitas" alt="visitas" style="height:22px;border-radius:4px">
+    </div>
     <div style="display:flex;align-items:center;gap:6px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg> Todos os diplomas possuem validação digital oficial</div>
   </div>
 </footer>
@@ -205,5 +205,32 @@ let v = parseInt(localStorage.getItem('visitaLocal')||'0')+1; localStorage.setIt
 // share
 document.getElementById('share').onclick=async()=>{const data={title:'Página de formação acadêmica - Luiz Carlos dos Santos',text:'Confira meus diplomas validados',url:location.href};try{if(navigator.share)await navigator.share(data);else{await navigator.clipboard.writeText(location.href);alert('Link copiado!')}}catch{}};
 </script>
+
+<script>
+function atualizaBadge(){
+  const img = document.getElementById('badge-visitas');
+  if(!img) return;
+  const claro = document.documentElement.classList.contains('light');
+  const cor = claro ? '0f172a' : '8b5cf6';
+  img.src = `https://countapi.mileshilliard.com/api/v1/hit/luiz-carlos-formacao-2026/shield?text=visitas&bgcolor=${cor}&textcolor=ffffff&style=flat&cache=${Date.now()}`;
+}
+// observa mudança de tema
+const observer = new MutationObserver(atualizaBadge);
+observer.observe(document.documentElement, {attributes:true, attributeFilter:['class']});
+atualizaBadge();
+</script>
+
+
+<script>
+const themeBtn = document.getElementById('theme');
+function setTheme(light){
+  document.documentElement.classList.toggle('light', light);
+  localStorage.setItem('tema', light ? 'light' : 'dark');
+  themeBtn.textContent = light ? '☀️' : '🌙';
+}
+themeBtn.addEventListener('click', ()=> setTheme(!document.documentElement.classList.contains('light')));
+setTheme(localStorage.getItem('tema') === 'light');
+</script>
+
 </body>
 </html>
